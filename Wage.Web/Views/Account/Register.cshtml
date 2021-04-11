@@ -1,0 +1,105 @@
+﻿@using Wage.Core.Entities;
+@using Wage.Web.DTOs;
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+@section Styles{ 
+<style>
+    .panel{
+        height:500px;
+    }
+</style>
+}
+<div class="panel">
+
+    <div class="d-flex justify-content-center m-t-b-10">
+        <img src="~/plugins/adminlte/img/avatar5.png" />
+    </div>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "frmRegister" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="formset">
+            <div class="form-group">
+                <lable class="form-label">نام</lable>
+                <input class="form-control" type="text" id="FirstName" name="FirstName">
+            </div>
+            <div class="form-group">
+                <lable class="form-label">نام خانوادگی</lable>
+                <input class="form-control" type="text" id="LastName" name="LastName">
+            </div>
+            <div class="form-group">
+                <lable class="form-label">نام کاربری</lable>
+                <input class="form-control" type="text" id="UserName" name="UserName">
+            </div>
+            <div class="form-group">
+                <lable class="form-label">کلمه عبور</lable>
+                <input class="form-control" type="password" id="Password" name="Password">
+            </div>
+            <input class="btn" type="submit"  value="ثبت" />
+        </div>
+    }
+    @{
+        var responseModel = (ResponseAPI<SaveLoginDto>)ViewData["response"];
+        if (responseModel != null && !responseModel.Success)
+        {
+            <div id="msgError" class="alert alert-danger text-center">
+                <h6>@responseModel.Message</h6>
+            </div>
+        }
+    }
+</div>
+
+
+@section Scripts{
+    <script>
+
+        $('.form-control').on('focus', function () {
+            $(this).removeAttr('style');
+            $(this).closest('.form-group').addClass('focus');
+        });
+
+        $('.form-control').on('focusout', function () {
+            $('.form-group').removeClass('focus');
+        });
+
+        /// Input Kepress Filled  Focus
+        $('.form-control').on('keyup', function () {
+            if ($(this).val().length > 0) {
+                $(this).closest('.form-group').addClass('filled');
+            } else {
+                $(this).closest('.form-group').removeClass('filled');
+            }
+        });
+
+
+        $("#frmRegister").submit(function (event) {
+            debugger
+            var isValaid = true;
+            let $userName = $('#UserName'), $pass = $('#Password'), $fname = $("#FirstName"), $lname = $("#LastName");
+            if ($userName.val() == '') {
+                $userName.css({ 'border-bottom': '2px solid red' });
+                isValaid = false;
+            }
+            if ($pass.val() == '') {
+                $pass.css({ 'border-bottom': '2px solid red' });
+                isValaid = false;
+            }
+            if ($fname.val() == '') {
+                $fname.css({ 'border-bottom': '2px solid red' });
+                isValaid = false;
+            }
+            if ($lname.val() == '') {
+                $lname.css({ 'border-bottom': '2px solid red' });
+                isValaid = false;
+            }
+            if (!isValaid) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+
+    </script>
+}

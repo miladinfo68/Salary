@@ -1,0 +1,182 @@
+﻿@model IEnumerable<Wage.Web.Models.PresenceInMonthViewModel>
+
+@{
+    ViewData["Title"] = "ثبت ورود خروج جدید مدیر گروه";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapperPresenceInMonth">
+    @*<input type="hidden" id="hdn_currentyYear" value="@ViewBag.CurrentPersianYear" />*@
+    <div class="text-center alert page-title">
+        <h6> حضور ماهیانه</h6>
+    </div> 
+    <div class="row">
+        <div class="col-12 d-flex">
+            <div class="">
+                @Html.DropDownList((ViewBag.Month as Wage.Core.Constants.DrpMonths).DrpId, (ViewBag.Month as Wage.Core.Constants.DrpMonths).Items, new { @class = "form-control-sm" })
+            </div>
+            <div class="mx-5"><button class="btn btn-success btn-sm btnShowPresenceInMonthExcel">گزارش اکسل</button></div>
+        </div>
+        @*<div class="col-6">
+                <div class="d-flex flex-row">
+                        <div class="col-8"><input type="text" class="form-control-sm w-100 txtSearch" placeholder="جستجو براساس کد یا نام استاد" /></div>
+                        <div class="col-4"><button class="btn btn-outline-info btn-sm btnSearch">جستجو</button></div>
+                    </div>
+            </div>*@
+    </div>
+    <br />
+
+    <table id="tblPresenceInMonth" class="table  table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>شناسه استاد</th>
+                <th>کد استاد</th>
+                <th>نام استاد</th>
+                <th>ماه </th>
+
+                <th>حضور آنلاین هفته 1</th>
+                <th>حضور فیزیکی هفته 1</th>
+                <th>مجموع حضور هفته 1</th>
+
+                <th>حضور آنلاین هفته 2</th>
+                <th>حضور فیزیکی هفته 2</th>
+                <th>مجموع حضور هفته 2</th>
+
+                <th>حضور آنلاین هفته 3</th>
+                <th>حضور فیزیکی هفته 3</th>
+                <th>مجموع حضور هفته 3</th>
+
+                <th>حضور آنلاین هفته 4</th>
+                <th>حضور فیزیکی هفته 4</th>
+                <th>مجموع حضور هفته 4</th>
+
+                <th>مازاد</th>
+                <th>مجموع حضور درماه</th>
+                <th>مبلغ هفته 1</th>
+                <th>مبلغ هفته 2</th>
+                <th>مبلغ هفته 3</th>
+                <th>مبلغ هفته 4</th>
+                <th>مبلغ ماهاه</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.ProfCode</td>
+                    <td>@item.ProfName</td>
+                    <td>@item.Month</td>
+                    <td>@item.OnlineTimeInWeek1</td>
+                    <td>@item.OfflineTimeInWeek1</td>
+                    <td>@item.TotalTimeInWeek1</td>
+                    <td>@item.OnlineTimeInWeek2</td>
+                    <td>@item.OfflineTimeInWeek2</td>
+                    <td>@item.TotalTimeInWeek2</td>
+                    <td>@item.OnlineTimeInWeek3</td>
+                    <td>@item.OfflineTimeInWeek3</td>
+                    <td>@item.TotalTimeInWeek3</td>
+                    <td>@item.OnlineTimeInWeek4</td>
+                    <td>@item.OfflineTimeInWeek4</td>
+                    <td>@item.TotalTimeInWeek4</td>
+                    <td>@item.TotalTimeInWeek5</td>
+                    <td>@item.TotalTimeInMounth</td>
+                    <td>@item.FinalAmountInWeek1</td>
+                    <td>@item.FinalAmountInWeek2</td>
+                    <td>@item.FinalAmountInWeek3</td>
+                    <td>@item.FinalAmountInWeek4</td>
+                    <td>@item.FinalAmountInMonth</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+@section Scripts{
+    <script>
+       
+        $("#drpMonthes").on("change", e => {
+            let month = $("#drpMonthes").val() || "0";
+            var url = "";
+            url += window.location.origin + window.location.pathname;
+            if (month != "0") {
+                url += "?month=" + month;
+            }
+            $("#hdn_drpMonth").val(month);
+            window.location.href = url.toLocaleLowerCase();
+        });
+
+    </script>
+
+}
+
+
+
+@*<table id="tblPresenceInMonth" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>شناسه استاد</th>
+                <th>کد استاد</th>
+                <th>نام استاد</th>
+                <th>ماه </th>
+
+                <th>حضور آنلاین هفته 1</th>
+                <th>حضور فیزیکی هفته 1</th>
+                <th class="on_of_time">مجموع حضور هفته 1</th>
+
+                <th>حضور آنلاین هفته 2</th>
+                <th>حضور فیزیکی هفته 2</th>
+                <th class="on_of_time">مجموع حضور هفته 2</th>
+
+                <th>حضور آنلاین هفته 3</th>
+                <th>حضور فیزیکی هفته 3</th>
+                <th class="on_of_time">مجموع حضور هفته 3</th>
+
+                <th>حضور آنلاین هفته 4</th>
+                <th>حضور فیزیکی هفته 4</th>
+                <th class="on_of_time">مجموع حضور هفته 4</th>
+
+                <th>حضور آنلاین هفته 5</th>
+                <th>حضور فیزیکی هفته 5</th>
+                <th class="on_of_time">مجموع حضور هفته 5</th>
+
+                <th>مجموع حضور درماه</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <select id="drpMounthes" class="form-control-sm">
+                <option value="01">فروردین</option>
+                <option value="02">اردیبهشت</option>
+                <option value="03">خرداد</option>
+                <option value="04">تیر</option>
+                <option value="05">مرداد</option>
+                <option value="06">شهریور</option>
+                <option value="07">مهر</option>
+                <option value="08">آبان</option>
+                <option value="09">آذر</option>
+                <option value="10">دی</option>
+                <option value="11">بهمن</option>
+                <option value="12">اسفند</option>
+        </select>
+
+        <select id="drpWeeks" class="form-control-sm">
+            <optgroup label="شماره هفته">
+                <option value="0">---</option>
+                <option value="1">هفته اول</option>
+                <option value="2">هفته دوم</option>
+                <option value="3">هفته سوم</option>
+                <option value="4">هفته چهارم</option>
+                <option value="5">هفته پنجم</option>
+            </optgroup>
+        </select>
+*@
+
+

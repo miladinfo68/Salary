@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Wage.Web.Models.PresenceInWeekViewModel>
+
+@{
+    ViewData["Title"] = "ثبت ورود خروج جدید مدیر گروه";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapperPresenceInWeek">
+    @*<input type="hidden" id="hdn_currentyYear" value="@ViewBag.CurrentPersianYear" />*@
+    <div class="text-center alert page-title">
+        <h6> حضور هفتگی</h6>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex">
+            <div>
+                @Html.DropDownList((ViewBag.Month as Wage.Core.Constants.DrpMonths).DrpId, (ViewBag.Month as Wage.Core.Constants.DrpMonths).Items, new { @class = "form-control-sm" })
+            </div>
+            <div class="mx-2">
+                @Html.DropDownList((ViewBag.Week as Wage.Core.Constants.DrpWeeks).DrpId, (ViewBag.Week as Wage.Core.Constants.DrpWeeks).Items, new { @class = "form-control-sm" })
+            </div>
+            <div class="mx-2"><button class="btn btn-info btn-sm btnShowPresenceInWeek">نمایش</button></div>
+            <div class="col-lg-2 offset-lg-4 col-md-3"><button class="btn btn-success btn-sm btnShowPresenceInWeekExcel">گزارش اکسل</button></div>
+        </div>
+        @* <div class="col-6">
+                <div class="d-flex flex-row">
+                            <div class="col-8"><input type="text" class="form-control-sm w-100 txtSearch" placeholder="جستجو براساس کد یا نام استاد" /></div>
+                            <div class="col-4"><button class="btn btn-outline-info btn-sm btnSearch">جستجو</button></div>
+                        </div>
+            </div>*@
+    </div>
+    <br />
+
+    <table id="tblPresenceInWeek" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>شناسه استاد</th>
+                <th>کد استاد</th>
+                <th>نام استاد</th>
+                <th>ماه </th>
+                <th>هفته</th>
+                <th>حضور آنلاین</th>
+                <th>حضور آفلاین</th>
+                <th>مجموع</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.GroupManagerId</td>
+                    <td>@item.ProfCode</td>
+                    <td>@item.ProfName</td>
+                    <td>@item.Month</td>
+                    <td>@item.Week</td>
+                    <td>@item.OnlineTotalTime</td>
+                    <td>@item.PhysicalTotalTime</td>
+                    <td>@item.TotalTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @*<table id="tblPresenceInWeek" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+            <thead>
+                <tr>
+                    <th>شناسه استاد</th>
+                    <th>کد استاد</th>
+                    <th>نام استاد</th>
+                    <th>ماه </th>
+                    <th>هفته</th>
+                    <th>حضور آنلاین</th>
+                    <th>حضور آفلاین</th>
+                    <th>مجموع</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>*@
+</div>

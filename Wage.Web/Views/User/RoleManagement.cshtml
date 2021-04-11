@@ -1,0 +1,227 @@
+﻿@model List<Wage.Core.Entities.Role>
+@{
+    ViewData["Title"] = "RoleManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <style>
+          #modalRole .form-label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+}
+
+<div class="wrapperRole">
+    
+    <table id="tblRoles" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>شناسه</th>
+                <th>نام نقش</th>
+                <th>نام  نمایشی</th>
+                <th>
+                    <a class="btn btn-info r1" href="#">افزودن نقش جدید</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Id</td>
+                    <td>@role.RoleName</td>
+                    <td>@role.DisplayName</td>
+                    <td>
+                        <a class="btn btn-primary r2" href="#" data-roleId="@role.Id" data-roleName="@role.RoleName" data-displayName="@role.DisplayName">ویرایش</a> |
+                        <a class="btn btn-danger r3" href="#" data-roleId="@role.Id" data-roleName="@role.RoleName" data-displayName="@role.DisplayName">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalRole" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modalRoleTitle"></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="col-12 ">
+                    <input type="hidden" id="hdnRoleId" />
+                    <div class="row">
+                        <div class="col-12">
+                            <lable class="form-label">نام کاربری</lable>
+                            <input class="form-control" type="text" name="RoleName" id="RoleName">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <lable class="form-label">نام </lable>
+                            <input class="form-control" type="text" name="DisplayName" id="DisplayName">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-2">
+                        <div class="col-12">
+                            <button class="btn btn-success">ثبت</button>
+                            <button class="btn btn-danger">حـــذف</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        //add role modal
+        $("#tblRoles a.r1").on("click", function (e) {
+            debugger;
+           e.preventDefault();
+            clearData();
+            $("#modalRoleTitle").text("درج نقش جدید").css({ "color": "#a9013f" });
+
+            $("#modalRole.btn-success").show();
+            $("#modalRole .btn-danger").hide();
+
+            $("#modalRole").modal('show');
+        });
+
+        //edit role modal
+        $("#tblRoles a.r2").on("click", function (e) {
+            //debugger;
+            e.preventDefault();
+            clearData();
+            $("#hdnRoleId").val($(this).attr("data-roleId"));
+            $('#RoleName').val($(this).attr("data-roleName"));
+            $('#DisplayName').val($(this).attr("data-displayName"));
+
+            $("#modalRoleTitle").text("ویرایش مشخصه " + $(this).attr("data-roleId")).css({ "color": "#a9013f" });
+
+            $("#modalRole .btn-success").show();
+            $("#modalRole .btn-danger").hide();
+
+            $("#modalRole").modal('show');
+        });
+
+        //show modal to delete user
+        $("#tblRoles a.r3").on("click", function (e) {
+            //debugger;
+            e.preventDefault();
+            clearData();
+            $("#hdnRoleId").val($(this).attr("data-roleId")).prop('disabled', true);
+            $('#RoleName').val($(this).attr("data-roleName")).prop('disabled', true);            
+            $('#DisplayName').val($(this).attr("data-displayName")).prop('disabled', true);
+
+            $("#modalRoleTitle").text("حذف مشخصه " + $(this).attr("data-roleId")).css({ "color": "#a9013f" });
+            ////$("#modalUser .btnswitch").removeClass("btn-success").addClass("btn-danger").text('').text("حـــذف");
+            $("#modalRole .btn-success").hide();
+            $("#modalRole .btn-danger").show();
+
+            $("#modalRole").modal('show');
+        });
+
+
+        //add or update user
+        $("#modalRole .btn-success").on("click", function (e) {
+            debugger
+            let roleId = $("#hdnRoleId").val()
+                , roleName = $('#RoleName').val()
+                , displayName = $('#DisplayName').val();
+            let data = {
+                "Id": roleId,
+                "RoleName": roleName,              
+                "DisplayName": displayName
+            }
+            if (vilidate()) {
+                $.ajax({
+                    url: '/User/AddOrUpdateRole',
+                    type: 'POST',
+                    data: data,
+                    success: function (res) {
+                        debugger;
+                        $("#modalRole").modal('hide');
+                        //window.Location = window.location;
+                        // the value true ensures that the current page is fully loaded ignoring the cache.
+                        location.reload(true);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("WOW Error Occured !!!!", "Error Message")
+                    }
+                });
+            }
+        });
+
+         //delete user
+        $("#modalRole .btn-danger").on("click", function (e) {
+            let roleId = $("#hdnRoleId").val();
+            if (roleId > 0) {
+                $.ajax({
+                    url: '/User/DeleteRole',
+                    type: 'POST',
+                    data: { "id": roleId },
+                    success: function (res) {
+                        debugger;
+                        $("#modalRole").modal('hide');
+                        //window.Location = window.location;
+                        // the value true ensures that the current page is fully loaded ignoring the cache.
+                        location.reload(true);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("WOW Error Occured !!!!", "Error Message")
+                    }
+                });
+            }
+        });
+
+
+
+
+        function vilidate() {
+            debugger;
+            var isValaid = true;
+
+            let $roleName = $('#RoleName')
+                , $displayName = $('#DisplayName');
+
+            if ($roleName.val() == '') {
+                $roleName.css({ 'border': '2px solid red' });
+                isValaid = false;
+            }
+            if ($displayName.val() == '') {
+                $displayName.css({ 'border': '2px solid red' });
+                isValaid = false;
+            }
+            return isValaid;
+        };
+
+        function clearData() {
+            $("#modalRole input").each(function (e) {
+                $(this).val('').removeAttr('style').prop("disabled", false);
+            });
+            $("#modalRoleTitle").text('').removeAttr('style');
+            $("#hdnRoleId").val('');
+        }
+
+          //remove added style to inputs when modal submit and some fields are invalid
+        $("#modalRole input").on('change', function (e) {
+            if ($(this).val() != '') $(this).removeAttr("style");
+        });
+    </script>
+
+}
+
+

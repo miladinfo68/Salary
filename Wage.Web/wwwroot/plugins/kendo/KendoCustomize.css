@@ -1,0 +1,15 @@
+﻿.k-block, .k-widget {
+    font-size: 13px;
+}
+
+.k-rtl .k-dropdown-wrap {
+    padding-left: 0;
+}
+
+    .k-rtl .k-dropdown-wrap .k-select {
+        border: none;
+    }
+
+.k-grid .btn {
+    color: #fff;
+}

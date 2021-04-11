@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Wage.Core.Entities.Holiday>
+@{
+    ViewData["Title"] = "تقویم تعطیلات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <style>
+        .content .pdate {
+            width: 100% !important;
+            height: 100%;
+            box-shadow: 0px 0px 0px 0px #c0c3e8;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            position: relative;
+        }
+        .pcalBtn {
+            position: absolute;
+            top: 12px;
+            left: 20px;
+        }
+    </style>
+
+}
+<div class="wrappertblHolidays">
+    <div id="msgSuccess"></div>
+    <div id="msgError"></div>
+    <table id="tblHolidays" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>ردیف</th>
+                <th>روز</th>
+                <th>مناسبت</th>
+                <th><button class="btn btn-outline-primary btnAddNewHoliday">درج تاریخ جدید</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int counter = 1;
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@counter </td>
+                        <td>@item.HolidayDate </td>
+                        <td>@item.Note</td>
+                        <td>
+                            <button class="btn btn-outline-danger btnDeleteHoliday" data-date="@item.HolidayDate ">حذف </button>
+                        </td>
+                    </tr>
+                    ++counter;
+                }
+            }
+        </tbody>
+    </table>
+
+
+    <div class="modal fade" id="modalAddNewHoliday" tabindex="-1">
+        <div id="msgSuccess" class="msgSuccess"></div>
+        <div id="msgError" class="msgError"></div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUserRolesTitle">ثبت تعطیلی جدید</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col-12 modalAddNewHolidayBody">
+                    <div class="my-2"> <input type="text" name="newHolidayDate" id="newHolidayDate" class="form-control pdate noraml" maxlength="10" placeholder="1400/01/01" />  </div>
+                    <div class="my-2"> <input type="text" name="newHolidayNote" id="newHolidayNote" class="form-control" placeholder="ذکر علت..." /></div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row row mt-3 mr-2 mb-4">
+                        <button class="btn btn-success btnSaveNewHoliday">ثبت</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

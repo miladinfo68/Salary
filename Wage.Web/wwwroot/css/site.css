@@ -1,0 +1,202 @@
+﻿/*a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; 
+}*/
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+.content table > thead > tr {
+    background: #343a40;
+    color: #fff;
+}
+
+/*.content table > thead >tr>th {
+    min-width:100px;
+}*/
+
+
+.content table > tbody > tr:nth-child(2n) {
+    background-color: #efe6cd;
+}
+
+.content table > tbody > tr:nth-child(2n+1) {
+    background-color: #edf3ea;
+}
+
+#tblNewEntrance > thead > tr > th:nth-child(2) {
+    width: 20% !important;
+}
+
+#tblEntranceDetails > thead > tr > th:last-child {
+    width: 170px;
+}
+
+#tblPresenceInWeek > thead > tr > th {
+    width: 10% !important;
+}
+
+#tblPresenceInMonth > tbody > tr > td:nth-child(7), #tblPresenceInMonth > tbody > tr > td:nth-child(10), #tblPresenceInMonth > tbody > tr > td:nth-child(13), #tblPresenceInMonth > tbody > tr > td:nth-child(16), #tblPresenceInMonth > tbody > tr > td:nth-child(19) {
+    background-color: #c4dcd0;
+}
+
+input[type=file] {
+    padding: 0;
+    /* background: antiquewhite; */
+    font-size: .875rem;
+    line-height: 1.6;
+    border-radius: .2rem;
+    border: none;
+    border: solid 1px #eae4d2;
+    padding: 1px;
+}
+
+    input[type=file]:focus {
+        outline: none;
+    }
+
+#tblHolidays {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.content table input[type=text], .content select.drpPresenceType {
+    width: 60px;
+    height: 25px;
+    box-shadow: 1px 1px 2px 1px #c0c3e8;
+    border-radius: 2px;
+    text-align: center;
+    border: solid 1px #66a5ff;
+}
+
+#tblSchedule_wrapper input[type=file]:focus {
+    outline: none;
+}
+
+.content .pdate {
+    width: 120px !important;
+    height: 25px;
+    box-shadow: 1px 1px 2px 1px #c0c3e8;
+    border-radius: 2px;
+}
+
+table > tbody > tr > td {
+    position: relative;
+}
+
+.content a.pcalBtn {
+    width: 20px;
+    height: 20px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    top: 10px;
+    left: 13px;
+}
+
+
+.content .modal-body {
+    height: 450px;
+    overflow-y: scroll;
+    /*scrollbar-width: thin;*/
+    /*transform: rotate(-180deg);*/
+}
+
+
+.content select {
+    min-width: 75px;
+}
+
+/*.content input[type=search] {    
+    height: 39px;
+}*/
+
+.content table.dataTable > thead .sorting:before {
+    right: 6px;
+}
+
+.content table.dataTable > thead .sorting_asc:before {
+    right: 6px;
+}
+
+.modal .form-label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.page-title {
+    background-color: #343a40;
+    font-weight: bolder;
+}
+.page-title h6{
+    color:#fff;
+}

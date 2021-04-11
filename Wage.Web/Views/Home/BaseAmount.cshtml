@@ -1,0 +1,80 @@
+﻿
+@model IEnumerable<Wage.Web.DTOs.GroupManagerDto>
+@*@using Kendo.Mvc.UI*@
+@{
+    ViewData["Title"] = "ثبت مبغ پایه";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <style>
+        .height {
+            height: 31px;
+        }
+    </style>
+
+}
+<div class="wrapperBaseMount">
+    <div id="msgSuccess"></div>
+    <div id="msgError"></div>
+    <div class="text-center alert page-title">
+        <h6> اصلاح حقوق پایه ماهیانه</h6>
+    </div>
+    <div class="row my-4">
+        <div class="col-8 d-flex">
+            <div class="col-lg-2">@Html.DropDownList((ViewBag.Year as Wage.Core.Constants.DrpYears).DrpId, (ViewBag.Year as Wage.Core.Constants.DrpYears).Items, new { @class = "form-control-sm" })</div>
+            <div class="col-lg-2">@Html.DropDownList((ViewBag.Month as Wage.Core.Constants.DrpMonths).DrpId, (ViewBag.Month as Wage.Core.Constants.DrpMonths).Items, new { @class = "form-control-sm" })</div>
+            <div class="col-lg-4 col-md-4 col-sm-4"><input type="text" name="txtStartAt" id="txtStartAt" class="form-control height" placeholder="شروع همکاری از 1399/07/10" /></div>
+            <div class="col-lg-1"><button class="btn btn-info btn-sm btnShowGroupManagersByMonth">نمایش</button></div>
+        </div>
+        <div class="col-lg-4 text-lg-right">
+            <button class="btn btn-success btn-sm btnShowGroupManagersByMonthExcel">گزارش اکسل</button>
+        </div>
+
+    </div>
+    @* <div class="col-6">
+            <div class="d-flex flex-row">
+                        <div class="col-8"><input type="text" class="form-control-sm w-100 txtSearch" placeholder="جستجو براساس کد یا نام استاد" /></div>
+                        <div class="col-4"><button class="btn btn-outline-info btn-sm btnSearch">جستجو</button></div>
+                    </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-5"><input type="text" class="form-control txtSearch" placeholder="جستجو براساس کد یا نام استاد" /></div>
+            <div class="col-sm-2"><button class="btn btn-outline-info btnSearch">جستجو</button></div>
+            <div class="col-sm-2"><button class="btn btn-outline-primary btnRefreshGrid">نمایش همه</button></div>
+        </div>*@
+
+
+    <table id="tblBaseAmount" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>کد استاد</th>
+                <th>نام استاد</th>
+                <th>تاریخ شروع همکاری</th>
+                <th>مبلغ در ماه جاری</th>
+                <th>اصلاح مبلغ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" value="@item.Id" class="hdn_grpId" /><span></span>
+                        <span class="profCode">@item.ProfCode</span>
+                    </td>
+                    <td><span class="profName">@item.ProfName</span></td>
+                    <td><span class="startAt">@item.StartAt</span></td>
+                    <td><input class="disabled" disabled type="text" value="@item.BaseAmount"></td>
+                    <td><input class="baseAmount" type="text" placeholder="1000000"></td>
+                    <td><button class="btn btn-info btnNewBaseAmount">اعمال تغییرات</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*@section Scripts{ <script> </script>}*@
+
+

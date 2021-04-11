@@ -1,0 +1,135 @@
+﻿@using System.Security.Claims;
+@using Wage.Core.Enums;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/plugins/adminlte/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/plugins/adminlte/css/adminlte.min.css">
+
+    <!-- Bootstrap 4 RTL -->
+    <link rel="stylesheet" href="/plugins/adminlte/css/bootstrap.min.css">
+    <!-- Custom style for RTL -->
+    <link rel="stylesheet" href="/plugins/adminlte/css/custom.css">
+
+    <!--Kendo UI -->
+    <link rel="stylesheet" href="~/plugins/kendo/kendo.bootstrap-v4.min.css" />
+    <link rel="stylesheet" href="~/plugins/kendo/kendo.rtl.min.css" />
+    <link rel="stylesheet" href="~/plugins/Kendo/KendoCustomize.css" />
+
+    <!-- AMIB Calender -->
+    <link href="~/plugins/amib/main.css" rel="stylesheet" />
+    <link href="~/plugins/amib/js-persian-cal.css" rel="stylesheet" />
+    <!-- Bootstrap Datatable-->
+    <link href="~/plugins/DataTables1-10xx/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/plugins/DataTables1-10xx/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <link href="~/css/site.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
+
+    <script src="~/plugins/adminlte/js/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 rtl -->
+    <script src="~/plugins/adminlte/js/bootstrap/bootstrap.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/adminlte/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/plugins/adminlte/js/adminlte.min.js"></script>
+
+    <!--Kendo UI -->
+    @*<script src="~/plugins/kendo/kendo.all.min.js"></script>
+        <script src="~/plugins/kendo/kendo.aspnetmvc.min.js"></script>*@
+
+    <!-- AMIB Calender -->
+    <script src="~/plugins/amib/js-persian-cal.min.js"></script>
+
+    <!-- Bootstrap Datatable-->
+    <script src="~/plugins/DataTables1-10xx/js/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/DataTables1-10xx/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- convert html table to excel file-->
+    <script src="~/plugins/Table2Excel/jquery.table2excel.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+            <ul class="loguot-user">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li><a href="/account/login">ورود<i class="fas fa-sign-out-alt"></i></a></li>
+                }
+                else
+                {
+                    <li><a href="/account/logout">خروج<i class="fas fa-sign-out-alt"></i></a></li>
+                }
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="/plugins/adminlte/img/03.png" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">@User.Identity.Name</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                   
+                    @if (User?.Claims?.Where(w => w.Type == ClaimTypes.Role)?.FirstOrDefault() != null
+                         && User.Claims.Where(w => w.Type == ClaimTypes.Role).First().Value.Split(',').Contains(EnumRole.ADMIN))
+                    {
+                        @Html.Partial("_AdminSideBar")
+                    }
+                    else if (User?.Claims?.Where(w => w.Type == ClaimTypes.Role)?.FirstOrDefault() != null
+                        && User.Claims.Where(w => w.Type == ClaimTypes.Role).First().Value.Split(',').Contains(EnumRole.USER))
+                    {
+                        Html.RenderPartial("_UserSideBar"); 
+                    }
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                <div class="p-15">
+                    @RenderBody()
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>@DateTime.Now.Year.ToString()&copy;</strong>
+        </footer>
+
+    </div>
+    <!-- ./wrapper -->
+    @RenderSection("Scripts", required: false)
+    <script src="~/js/site.js"></script>
+</body>
+</html>

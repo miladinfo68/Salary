@@ -1,0 +1,69 @@
+﻿
+@model IEnumerable<Wage.Web.DTOs.GroupManagerDto>
+@*@using Kendo.Mvc.UI*@
+@{
+    ViewData["Title"] = "تشکیل شورای پژوهشی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapperResearchCouncil">
+    @*<div class="row mb-3">
+            <div class="col-sm-5"><input type="text" class="form-control txtSearch" placeholder="جستجو براساس کد یا نام استاد" /></div>
+            <div class="col-sm-2"><button class="btn btn-outline-info btnSearch">جستجو</button></div>
+            <div class="col-sm-2"><button class="btn btn-outline-primary btnRefreshGrid">نمایش همه</button></div>
+        </div>*@
+    <div id="msgSuccess"></div>
+    <div id="msgError"></div>
+    <div class="text-center alert page-title">
+        <h6> تائید شورای پژوهشی</h6>
+    </div>
+    <div class="my-3">
+        @Html.DropDownList((ViewBag.Month as Wage.Core.Constants.DrpMonths).DrpId, (ViewBag.Month as Wage.Core.Constants.DrpMonths).Items, new { @class = "form-control-sm" })
+    </div>
+    <table id="tblResearchCouncil" class="table table-bordered table-responsive table-hover tbl-date-enter text-center">
+        <thead>
+            <tr>
+                <th>کد استاد</th>
+                <th>نام استاد</th>
+                <th>شورا برگزار شده؟</th>
+                <th>تاریخ برگزاری</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span class="profCode">@item.ProfCode</span>
+                        <input type="hidden" value="@item.Id" class="hdn_grpId" />
+                    </td>
+                    <td><span class="profName">@item.ProfName</span></td>
+                    <td><input class="chkCouncil" type="checkbox" checked="@item.ChkCouncil"></td>
+                    <td><input class="councilDate pdate" type="text" value="@item.CouncilDate" id="entranceDate_@item.ProfCode" /></td>
+                    <td><button class="btn btn-info btnResearchCouncil">افزودن</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script>
+        $("#drpMonthes").on("change", e => {
+            let month = $("#drpMonthes").val() || "0";
+            var url = "";
+            url += window.location.origin + window.location.pathname;
+            if (month != "0") {
+                url += "?month=" + month;
+            }
+            $("#hdn_drpMonth").val(month);
+            window.location.href = url.toLocaleLowerCase();
+        });
+
+    </script>
+
+}
+
